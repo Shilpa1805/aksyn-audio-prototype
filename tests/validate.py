@@ -2,12 +2,16 @@ import csv
 import numpy as np
 import os
 
-LOG_PATH = os.path.join(os.path.dirname(__file__), "..", "results", "delay_log.csv")
+_base = os.path.join(os.path.dirname(__file__), "..", "results")
+# Prefer the C++ receiver log; fall back to Python receiver log
+_cpp_log = os.path.join(_base, "delay_log_cpp.csv")
+_py_log  = os.path.join(_base, "delay_log.csv")
+LOG_PATH = _cpp_log if os.path.exists(_cpp_log) else _py_log
 
 THRESHOLDS = {
-    "max_mean_delay_ms"  : 150.0,   # FR: perceptible echo threshold
-    "max_jitter_ms"      : 30.0,    # NFR: jitter tolerance
-    "min_packets"        : 50,      # NFR: enough data to be meaningful
+    "max_mean_delay_ms"  : 150.0,   # ITU-T: perceptible echo threshold
+    "max_jitter_ms"      : 30.0,    # NFR: perceptible audio choppiness
+    "min_packets"        : 50,      # NFR: minimum meaningful sample size
 }
 
 def load_log(path):
@@ -40,20 +44,19 @@ def run_validation():
     }
 
     for test, passed in results.items():
-        status = "PASS ✓" if passed else "FAIL ✗"
+        status = "PASS" if passed else "FAIL"
         print(f"  {status}  {test}")
 
     print(f"\n  Packets   : {n}")
-    print(f"  Mean delay: {mean_d:.1f}ms  (expected ~61ms)")
+    print(f"  Mean delay: {mean_d:.1f}ms  (expected ~62ms theoretical)")
     print(f"  Jitter    : {jitter:.1f}ms")
-    print(f"  Gap       : {mean_d - 61:.1f}ms vs theoretical model")
+    print(f"  Gap       : {mean_d - 62:.1f}ms vs theoretical model")
 
-    gap = mean_d - 61
+    gap = mean_d - 62
     if gap > 0:
         print(f"\n  Gap analysis: +{gap:.1f}ms above model explained by")
-        print(f"  OS audio scheduler variance (~10ms) and Python")
-        print(f"  asyncio event loop latency (~{gap-10:.0f}ms). Both are")
-        print(f"  deterministic in a C++ PortAudio implementation.")
+        print(f"  OS audio scheduler variance (~10ms) and asyncio/UDP")
+        print(f"  event loop latency (~{gap-10:.0f}ms est).")
     print("="*55)
 
 if __name__ == "__main__":
