@@ -28,27 +28,76 @@ Real-time audio streaming prototype over UDP with C++ packet engine, jitter buff
 
 ---
 
-## Building (Windows — vcpkg + CMake)
+## Python Implementation
 
+The easiest way to run the prototype is using the provided Python scripts. This is recommended for first-time users.
+
+### 1. Prerequisites
+- **Python 3.8+** installed on your system.
+- Open a terminal and install the required dependencies:
+  ```powershell
+  pip install websockets pyaudio numpy miniaudio
+  ```
+
+### 2. Run the Receiver
+Open a terminal and start the receiver. It will listen for incoming audio packets and play them back on your speakers.
 ```powershell
-# 1. Install dependencies via vcpkg
-vcpkg install portaudio
-
-# 2. Configure and build
-cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
-cmake --build build --config Release
+python receiver/receiver.py
 ```
+
+### 3. Run the Sender
+Open a **second** terminal and start the sender. It will read an audio file and stream it to the receiver.
+```powershell
+python sender/sender.py ws://localhost:9001 test_audio.wav
+```
+*(Note: You can pass any `.wav`, `.mp3`, or `.flac` file as the last argument).*
 
 ---
 
-## Running
+## C++ Implementation
 
-### Sender
+For maximum performance and lowest latency, you can build the C++ versions of the sender and receiver.
+
+### 1. Prerequisites (Windows)
+- **Visual Studio** (with Desktop development with C++ installed).
+- **CMake** installed and added to your system PATH.
+- **vcpkg** installed for dependency management. *If you don't have vcpkg, [install it here](https://vcpkg.io/en/getting-started).*
+
+### 2. Build Instructions
+Open a PowerShell window in the project directory:
+```powershell
+# 1. Install PortAudio dependency via vcpkg
+vcpkg install portaudio
+
+# 2. Configure the project
+# IMPORTANT: Ensure your VCPKG_ROOT environment variable is set to your vcpkg installation path
+cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
+
+# 3. Build the project
+cmake --build build --config Release
+```
+
+### 3. Running the C++ Receiver
+In one terminal, start the receiver:
+```powershell
+.\build\Release\audio_receiver.exe --port 9901 --prebuffer 3
+```
+
+| Flag          | Default | Description                                        |
+|---------------|---------|----------------------------------------------------|
+| `--port`      | 9901    | UDP listen port                                    |
+| `--prebuffer` | 3       | Jitter buffer depth (frames to buffer before play) |
+
+*The receiver will automatically write its delay measurements to `results/delay_log_cpp.csv` on each run.*
+
+### 4. Running the C++ Sender
+In a **second** terminal, start the sender:
 ```powershell
 .\build\Release\audio_sender.exe --ip 127.0.0.1 --port 9901 --sr 48000 --ch 1 --frame 480
 ```
 
-With network impairment simulation:
+**Testing Network Resilience:**
+You can simulate a poor network connection by injecting artificial packet loss and delay:
 ```powershell
 .\build\Release\audio_sender.exe --ip 127.0.0.1 --port 9901 --sr 48000 --ch 1 --frame 480 --drop 2.0 --delay-ms 5
 ```
@@ -62,18 +111,6 @@ With network impairment simulation:
 | `--frame`    | 480         | Frame size in samples (10ms @ 48kHz)   |
 | `--drop`     | 0.0         | Simulated packet loss rate (%)         |
 | `--delay-ms` | 0           | Artificial per-packet delay (ms)       |
-
-### Receiver
-```powershell
-.\build\Release\audio_receiver.exe --port 9901 --prebuffer 3
-```
-
-| Flag          | Default | Description                                        |
-|---------------|---------|----------------------------------------------------|
-| `--port`      | 9901    | UDP listen port                                    |
-| `--prebuffer` | 3       | Jitter buffer depth (frames to buffer before play) |
-
-The receiver writes `results/delay_log_cpp.csv` on each run.
 
 ---
 
