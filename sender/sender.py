@@ -37,7 +37,13 @@ def to_wav_path(audio_path: str):
     """
     ext = os.path.splitext(audio_path)[1].lower()
     if ext == ".wav":
-        return audio_path, False
+        try:
+            with wave.open(audio_path, "rb") as _:
+                pass
+            return audio_path, False
+        except wave.Error:
+            print("[SENDER] WAV file uses unsupported encoding (e.g. format 3). Converting with miniaudio...")
+            pass
 
     try:
         import miniaudio

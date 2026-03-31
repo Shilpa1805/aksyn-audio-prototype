@@ -1,0 +1,4 @@
+C:/Users/A/aksyn-audio-prototype/build/CMakeFiles/audio_sender.dir
+C:/Users/A/aksyn-audio-prototype/build/CMakeFiles/audio_receiver.dir
+C:/Users/A/aksyn-audio-prototype/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/A/aksyn-audio-prototype/build/CMakeFiles/ZERO_CHECK.dir

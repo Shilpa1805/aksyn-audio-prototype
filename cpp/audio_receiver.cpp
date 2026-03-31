@@ -121,7 +121,9 @@ struct SharedState {
   std::atomic<uint16_t> channels{0};
   std::atomic<uint16_t> frame_samples{0};
 
-  aksyn::JitterBuffer jbuf{3, 200};
+  aksyn::JitterBuffer jbuf;
+
+  SharedState(const ReceiverConfig& c) : cfg(c), jbuf(c.prebuffer_frames, c.max_buffer_frames) {}
   aksyn::RunningStats delay_net_ms; // receive_time - capture_time
   std::atomic<uint64_t> packets{0};
   std::atomic<uint64_t> plc_frames{0};
@@ -196,9 +198,7 @@ int main(int argc, char** argv) {
     return 1;
   }
 
-  SharedState st{};
-  st.cfg = cfg;
-  st.jbuf = aksyn::JitterBuffer(cfg.prebuffer_frames, cfg.max_buffer_frames);
+  SharedState st{cfg};
   g_state = &st;
 
 #if defined(_WIN32)

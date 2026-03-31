@@ -1,0 +1,18 @@
+Detecting compiler hash for triplet x64-windows...
+Compiler found: C:/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/VC/Tools/MSVC/14.29.30133/bin/Hostx64/x64/cl.exe
+The following packages are already installed:
+    portaudio:x64-windows@19.7#9
+  * vcpkg-cmake:x64-windows@2024-04-23
+  * vcpkg-cmake-config:x64-windows@2024-05-23
+portaudio provides CMake targets:
+
+  # this is heuristically generated, and may not be correct
+  find_package(portaudio CONFIG REQUIRED)
+  target_link_libraries(main PRIVATE portaudio)
+
+portaudio provides pkg-config modules:
+
+  # Portable audio I/O
+  portaudio-2.0
+
+All requested installations completed successfully in: 3.15 ms

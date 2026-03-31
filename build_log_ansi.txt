@@ -1,0 +1,25 @@
+﻿Microsoft (R) Build Engine version 16.11.6+a918ceb31 for .NET Framework
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  1>Checking Build System
+  Building Custom Rule C:/Users/A/aksyn-audio-prototype/CMakeLists.txt
+  audio_receiver.cpp
+C:\Users\A\aksyn-audio-prototype\cpp\audio_receiver.cpp(201,11): error C2280: 'aksyn::JitterBuffer &aksyn::JitterBuffer::operator =(const aksyn::JitterBuffer &)': attempting to reference a deleted function [C:\Users\A\aksyn-audio-prototype\build\audio_receiver.vcxproj]
+C:\Users\A\aksyn-audio-prototype\cpp\aksyn_audio_common.h(86): message : see declaration of 'aksyn::JitterBuffer::operator =' [C:\Users\A\aksyn-audio-prototype\build\audio_receiver.vcxproj]
+C:\Users\A\aksyn-audio-prototype\cpp\aksyn_audio_common.h(86,17): message : 'aksyn::JitterBuffer &aksyn::JitterBuffer::operator =(const aksyn::JitterBuffer &)': function was explicitly deleted [C:\Users\A\aksyn-audio-prototype\build\audio_receiver.vcxproj]
+  Building Custom Rule C:/Users/A/aksyn-audio-prototype/CMakeLists.txt
+  audio_sender.cpp
+C:\Users\A\aksyn-audio-prototype\cpp\audio_sender.cpp(84,8): error C2039: 'mt19937_64': is not a member of 'std' [C:\Users\A\aksyn-audio-prototype\build\audio_sender.vcxproj]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.29.30133\include\iostream(19): message : see declaration of 'std' [C:\Users\A\aksyn-audio-prototype\build\audio_sender.vcxproj]
+C:\Users\A\aksyn-audio-prototype\cpp\audio_sender.cpp(84,19): error C3646: 'rng': unknown override specifier [C:\Users\A\aksyn-audio-prototype\build\audio_sender.vcxproj]
+C:\Users\A\aksyn-audio-prototype\cpp\audio_sender.cpp(84,22): error C2059: syntax error: '{' [C:\Users\A\aksyn-audio-prototype\build\audio_sender.vcxproj]
+C:\Users\A\aksyn-audio-prototype\cpp\audio_sender.cpp(84,22): error C2334: unexpected token(s) preceding '{'; skipping apparent function body [C:\Users\A\aksyn-audio-prototype\build\audio_sender.vcxproj]
+C:\Users\A\aksyn-audio-prototype\cpp\audio_sender.cpp(85,8): error C2039: 'uniform_real_distribution': is not a member of 'std' [C:\Users\A\aksyn-audio-prototype\build\audio_sender.vcxproj]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.29.30133\include\iostream(19): message : see declaration of 'std' [C:\Users\A\aksyn-audio-prototype\build\audio_sender.vcxproj]
+C:\Users\A\aksyn-audio-prototype\cpp\audio_sender.cpp(85,33): error C7568: argument list missing after assumed function template 'uniform_real_distribution' [C:\Users\A\aksyn-audio-prototype\build\audio_sender.vcxproj]
+C:\Users\A\aksyn-audio-prototype\cpp\audio_sender.cpp(85): error C2062: type 'unknown-type' unexpected [C:\Users\A\aksyn-audio-prototype\build\audio_sender.vcxproj]
+C:\Users\A\aksyn-audio-prototype\cpp\audio_sender.cpp(85,45): error C2334: unexpected token(s) preceding '{'; skipping apparent function body [C:\Users\A\aksyn-audio-prototype\build\audio_sender.vcxproj]
+C:\Users\A\aksyn-audio-prototype\cpp\audio_sender.cpp(114,20): error C2039: 'uni': is not a member of '`anonymous-namespace'::CaptureState' [C:\Users\A\aksyn-audio-prototype\build\audio_sender.vcxproj]
+C:\Users\A\aksyn-audio-prototype\cpp\audio_sender.cpp(75): message : see declaration of '`anonymous-namespace'::CaptureState' [C:\Users\A\aksyn-audio-prototype\build\audio_sender.vcxproj]
+C:\Users\A\aksyn-audio-prototype\cpp\audio_sender.cpp(114,28): error C2039: 'rng': is not a member of '`anonymous-namespace'::CaptureState' [C:\Users\A\aksyn-audio-prototype\build\audio_sender.vcxproj]
+C:\Users\A\aksyn-audio-prototype\cpp\audio_sender.cpp(75): message : see declaration of '`anonymous-namespace'::CaptureState' [C:\Users\A\aksyn-audio-prototype\build\audio_sender.vcxproj]

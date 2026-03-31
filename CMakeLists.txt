@@ -22,9 +22,9 @@ if (WIN32)
   target_link_libraries(audio_receiver PRIVATE ws2_32)
 endif()
 
-find_package(PortAudio CONFIG REQUIRED)
-target_link_libraries(audio_sender PRIVATE PortAudio::PortAudio)
-target_link_libraries(audio_receiver PRIVATE PortAudio::PortAudio)
+find_package(portaudio CONFIG REQUIRED)
+target_link_libraries(audio_sender PRIVATE portaudio)
+target_link_libraries(audio_receiver PRIVATE portaudio)
 
 target_compile_definitions(audio_sender PRIVATE _CRT_SECURE_NO_WARNINGS)
 target_compile_definitions(audio_receiver PRIVATE _CRT_SECURE_NO_WARNINGS)
